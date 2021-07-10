@@ -90,13 +90,13 @@ var margin = {
     left: 100
     };//end margin
 
-
+//Loads the detail data into sample metadata area
 function metadata(yrid){
 
     d3.json("../static/data/nfl-dui2.json").then(function(data){
         console.log("in metadata")
         
-        //filter the year
+        //filter the year details
         function filterDuiData(d) {
             return d.Year == yrid;
         }  
@@ -110,8 +110,8 @@ function metadata(yrid){
         display.html("");
         for (i=0; i<result.length; i++){
             Object.entries(result[i]).forEach(([key, value]) => {
-                display.append('div');
-                display.append("h5").html(`<b>${key}</b>: ${value}`);
+                display.append('div class=row');
+                display.append("h5").html(`<td><b>${key}</b>: ${value}</td>`);
                 
             })//end forEach
             display.append('hr');
@@ -220,16 +220,16 @@ function lineGraph(yrid){
         });//end data.map
         
         console.log(year_array);
-        yearTag.append("option")
-                .property("value", "")
-                .text("Select Year");
-        year_array.map((year) => {
-            yearTag.append("option")
-                    .property("value", year)
-                    .text(year);
-        });
-        console.log("yearTag")
-        console.log(yearTag)
+        // yearTag.append("option")
+        //         .property("value", "")
+        //         .text("Select Year");
+        // year_array.map((year) => {
+        //     yearTag.append("option")
+        //             .property("value", year)
+        //             .text(year);
+        // });
+        // console.log("yearTag")
+        // console.log(yearTag)
         team_array.map((element) => {
             team[element] = 0
             // console.log(element, "= ", team[element])
@@ -244,10 +244,10 @@ function lineGraph(yrid){
         y_label = [];
         x_value = [];
         for (teamName in team) {
-        if (team[teamName] != 0) {
-            y_label.push(teamName)
-            x_value.push(team[teamName])
-        }
+            if (team[teamName] != 0) {
+                y_label.push(teamName)
+                x_value.push(team[teamName])
+            }
         }
         
         // Line chart months
