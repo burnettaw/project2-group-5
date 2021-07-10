@@ -25,7 +25,6 @@ function initdropdown(){
         var year = yr[0].Year;
         metadata(year);
         createBarChart(year);
-      //  createBubbles(id);
         gauge(year);
         lineGraph(year)
     })//end d3.json 
@@ -78,7 +77,7 @@ function createBarChart(yrid){
 function optionChanged(id){
     metadata(id);
     createBarChart(id);
-    //createBubbles(id);
+    lineGraph(id);
    gauge(id);
 }
    
@@ -91,45 +90,6 @@ var margin = {
     left: 100
     };//end margin
 
-// function createBubbles(sampleid){    
-//     d3.json("data/samples.json").then(function(data){
-// /*
-// Create a bubble scatter chart 
-// */
-//         console.log(data)//displays data to console
-//         var samples = data.samples;
-//         var filterdata = samples.filter(row => row.id == sampleid);
-//         var result = filterdata[0];
-//         //console.log("result otu labels");
-//         //console.log(result.otu_labels);
-//        // console.log(filterdata[0].otu_labels);
-//         var sample_values = result.sample_values;
-//         var otu_ids = result.otu_ids;
-//        // var otu_labels = filterdata[0].otu_labels;
-//         var otu_labels = result.otu_labels;
-       
-//         marker_sizes = sample_values.slice(0, 10).reverse();
-//         var data = [{
-//             y:sample_values.slice(0, 10).reverse(), 
-//             x:otu_ids.slice(0, 10).reverse(),
-//             mode: 'markers',
-//             marker: {
-//                 color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-//                 size: marker_sizes
-//             },
-//             text:otu_ids.slice(0, 10).map(otu_ids => `OTU${otu_ids}`).reverse(),
-//             transform: "rotate(-90)"
-//         }];
-
-//         var layout = {
-//             title: "<b>Bacteria Culture Per Sample<b>",
-//             yaxis: { title: "<b>Sample Values<b>" },
-//             xaxis: { title: "<b>OTU<b>" }
-//         };
-//         Plotly.newPlot("bubble", data, layout);
-//     })
-
-// }//end function
 
 function metadata(yrid){
 
@@ -167,17 +127,27 @@ function gauge(yrid){
             return d.Year == yrid;
         }  
         var yrdetails = data.filter(filterDuiData) 
+        console.log("yrdetails")
         console.log(yrdetails)
+        console.log("yrdetails length")
+        console.log(yrdetails.length)
         var metadata = yrdetails[0];
         
-       
-       //if severity category is 0 add 1
-        var duicat = metadata.Severity;
-        if(duicat == 0){
-            duicat +=1
-            metadata.Severity+=1
+        sum = 0;
+        for (var i = 0; i < yrdetails.length; i++) {
+            sum += +yrdetails[i].Severity;
         }
-        var title = metadata.TEAM
+        average = Math.round(sum / yrdetails.length )
+        console.log("sum")
+        console.log(sum)
+        console.log('average')
+        console.log(average)
+       //if severity category is 0 add 1
+        var duicat = average;
+        console.log('average')
+        console.log(average)
+       
+        var title = "Teams Average Severity"
         console.log('duicat')
         console.log(duicat)
         var data = [{
@@ -215,7 +185,7 @@ function gauge(yrid){
        // margin: { t: 0, r: 0, l: 0, b: 0 },
         font: { color: "darkblue", family: "Arial" },
         title: { text: title, font: { size: 24 }}
-        //Sub title should be Team name
+       
       };//end layout
       
       Plotly.newPlot('gauge', data, layout);
@@ -294,9 +264,7 @@ function lineGraph(yrid){
     .domain([0, 100])
     .range([0, svgHeight]);
 
-    console.log(`The height of Han's bar: ${yScale(testScores[0])}`);
-
-        
+    console.log(`The height of Han's bar: ${yScale(testScores[0])}`);  
 
 }
 initdropdown(); //calls function to fill dropdown object
