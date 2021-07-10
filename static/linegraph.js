@@ -13,8 +13,8 @@ var svg = d3.select("#my_dataviz")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv", function(data) {
-
+d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv").then(function(data) {
+  console.log(data)
   // group the data: I want to draw one line per group
   var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
     .key(function(d) { return d.name;})
@@ -50,6 +50,7 @@ d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_data
         .attr("stroke", function(d){ return color(d.key) })
         .attr("stroke-width", 1.5)
         .attr("d", function(d){
+          console.log(d)
           return d3.line()
             .x(function(d) { return x(d.year); })
             .y(function(d) { return y(+d.n); })
