@@ -234,23 +234,8 @@ function lineGraph(yrid){
             team[element] = 0
             // console.log(element, "= ", team[element])
         });
-    
-    //});
-    // console.log("team_array")
-    // console.log(team_array)
-    // Select a year from the dropdown list of Year in index.html
-    // function optionYear(selected_yr) {
-    //   console.log("selected_yr=", selected_yr);
-    //   team_array.map((element) => {
-    //     team[element] = 0
-    //     // console.log(element, "= ", team[element])
-    //   });
-    //d3.csv("/static/data/nfl-duiupdate2.csv").then(function (data) {
         results = yrdetails; //data.filter(row => row.Year == selected_yr);
-        // console.log("results")
-        // console.log(results)
-        // console.log("results.length")
-        // console.log(results.length)
+     
         for (var i = 0; i < results.length; i++) {
             teamName = results[i].TEAM
             team[teamName] += 1
@@ -265,34 +250,32 @@ function lineGraph(yrid){
         }
         }
         
-    // Line chart months
-    var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var dui = [];
-    for (var i = 0; i <= 12; i++) {
-      dui[i.toString()] = 0
-    }
-    console.log("results.length")
-    console.log(results)
-    for (var i = 0; i < results.length; i++) {
-      m = results[i].DATE[0]
-      dui[m] += 1
-    }
-    console.log(month, "= ", dui)
-    var line_trace = {
-      x: month,
-      y: dui,
-      type: 'scatter'
-    };
+        // Line chart months
+        var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var dui = [];
+        for (var i = 0; i <= 12; i++) {
+        dui[i.toString()] = 0
+        }
+        console.log("results.length")
+        console.log(results)
+        for (var i = 0; i < results.length; i++) {
+        m = results[i].DATE[0]
+        dui[m] += 1
+        }
+        console.log(month, "= ", dui)
+        var line_trace = {
+        x: month,
+        y: dui,
+        type: 'scatter'
+        };
 
-    selected_yr = yrid
-    var line_layout = {
-      title: `NFL Teams Monthly DUI in ${selected_yr}`
-    };
-    var data = [line_trace];
-    Plotly.newPlot('line', data, line_layout);
+        selected_yr = yrid
+        var line_layout = {
+        title: `NFL Teams Monthly DUI in ${selected_yr}`
+        };
+        var data = [line_trace];
+        Plotly.newPlot('line', data, line_layout);
   
   });
-//}
-
-}
+}// line chart
 initdropdown(); //calls function to fill dropdown object
