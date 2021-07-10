@@ -36,7 +36,7 @@ function createBarChart(yrid){
   // Use d3.json() to fetch data from JSON file
     d3.json("../static/data/nfl-dui2.json").then((duiData) => {
         function filterDuiData(dui) {
-        return dui.Year == yrid;
+            return dui.Year == yrid;
         }
     
         // Use filter() to pass the function as its argument
@@ -190,81 +190,109 @@ function gauge(yrid){
       
       Plotly.newPlot('gauge', data, layout);
     })//end d3
-}//end function
+}//end function gauge
 
+
+//create a line graph of teams
 function lineGraph(yrid){
-    // Part 1: Max, Min, Extent
-    var dataArr = [10, 20, 2000];
+    console.log("in line gragh function")
+    d3.json("../static/data/nfl-dui2.json").then(function(data){
+        // console.log("in metadata")
+        // console.log(data)
+         function filterDuiData(d) {
+             return d.Year == yrid;
+         }  
+        var yrdetails = data.filter(filterDuiData) 
+        var yearTag = d3.select('#selDataset');
 
-    console.log("min value ", d3.min(dataArr));
-    console.log("max value ", d3.max(dataArr));
-    console.log("min and max values ", d3.extent(dataArr));
+        year_array = [];
+        team_array = [];
+        team = {};
+        data.map((row_data) => {
+            if (year_array.indexOf(row_data.Year) === -1) {
+                year_array.push(row_data.Year)
+                // console.log("row_data")
+                // console.log(row_data.Year)
+            }
+            if (team_array.indexOf(row_data.TEAM) === -1) {
+            team_array.push(row_data.TEAM)
+            }//end if
+        });//end data.map
+        
+        console.log(year_array);
+        yearTag.append("option")
+                .property("value", "")
+                .text("Select Year");
+        year_array.map((year) => {
+            yearTag.append("option")
+                    .property("value", year)
+                    .text(year);
+        });
+        console.log("yearTag")
+        console.log(yearTag)
+        team_array.map((element) => {
+            team[element] = 0
+            // console.log(element, "= ", team[element])
+        });
+    
+    //});
+    // console.log("team_array")
+    // console.log(team_array)
+    // Select a year from the dropdown list of Year in index.html
+    // function optionYear(selected_yr) {
+    //   console.log("selected_yr=", selected_yr);
+    //   team_array.map((element) => {
+    //     team[element] = 0
+    //     // console.log(element, "= ", team[element])
+    //   });
+    //d3.csv("/static/data/nfl-duiupdate2.csv").then(function (data) {
+        results = yrdetails; //data.filter(row => row.Year == selected_yr);
+        // console.log("results")
+        // console.log(results)
+        // console.log("results.length")
+        // console.log(results.length)
+        for (var i = 0; i < results.length; i++) {
+            teamName = results[i].TEAM
+            team[teamName] += 1
+            console.log(teamName, "= ", team[teamName])
+        }//end for
+        y_label = [];
+        x_value = [];
+        for (teamName in team) {
+        if (team[teamName] != 0) {
+            y_label.push(teamName)
+            x_value.push(team[teamName])
+        }
+        }
+        
+    // Line chart months
+    var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var dui = [];
+    for (var i = 0; i <= 12; i++) {
+      dui[i.toString()] = 0
+    }
+    console.log("results.length")
+    console.log(results)
+    for (var i = 0; i < results.length; i++) {
+      m = results[i].DATE[0]
+      dui[m] += 1
+    }
+    console.log(month, "= ", dui)
+    var line_trace = {
+      x: month,
+      y: dui,
+      type: 'scatter'
+    };
 
-    // Part 2: scaleLinear
-    // Imagine you have test scores with possible scores from 0 to 100,
-    // and you want to graph them in an SVG that is 1000 pixels high.
-
-    var testScores = [50, 90, 95, 75, 85];
-
-    // a. hard-coded
-
-    var yScale = d3.scaleLinear()
-        .domain([0, 100])
-        .range([0, 1000]);
-
-    console.log(`50 returns ${yScale(50)}`);
-    console.log(`75 returns ${yScale(75)}`);
-    console.log(`100 returns ${yScale(100)}`);
-
-    // b. max and min
-    var svgHeight = 1000;
-
-    var yScale = d3.scaleLinear()
-    .domain([0, d3.max(testScores)])
-    .range([0, svgHeight]);
-
-
-    console.log(`50 returns ${yScale(50)}`);
-    console.log(`75 returns ${yScale(75)}`);
-    console.log(`95 returns ${yScale(95)}`);
-
-
-    // c. extent
-    var yScale = d3.scaleLinear()
-    .domain(d3.extent(testScores))
-    .range([0, svgHeight]);
-
-
-    console.log(`50 returns ${yScale(50)}`);
-    console.log(`75 returns ${yScale(75)}`);
-    console.log(`95 returns ${yScale(95)}`);
-
-    // Part 3: scaleBand
-    // Imagine you want to visualize student grade information on a bar chart.
-    svgHeight = 600;
-    var svgWidth = 1000;
-
-    testScores = [90, 85, 75, 90];
-    var students = ["Han", "Sarah", "Matt", "Ruchi"];
-
-    var xScale = d3.scaleBand()
-    .domain(students)
-    .range([0, svgWidth]);
-
-    console.log(`Han's x-coordinate: ${xScale("Han")}`);
-    console.log(`Sarah's x-coordinate: ${xScale(students[1])}`);
-    console.log(`Matt's x-coordinate: ${xScale("Matt")}`);
-    console.log(`Ruchi's x-coordinate: ${xScale(students[3])}`);
-
-    console.log(`Each band is ${xScale.bandwidth()} pixels wide.`);
-
-    // The y values are scaled separately.
-
-    var yScale = d3.scaleLinear()
-    .domain([0, 100])
-    .range([0, svgHeight]);
-
-    console.log(`The height of Han's bar: ${yScale(testScores[0])}`);  
+    selected_yr = yrid
+    var line_layout = {
+      title: `NFL Teams Monthly DUI in ${selected_yr}`
+    };
+    var data = [line_trace];
+    Plotly.newPlot('line', data, line_layout);
+  
+  });
+//}
 
 }
 initdropdown(); //calls function to fill dropdown object
