@@ -56,8 +56,12 @@ td, th {
 }
 .footer{
   text-align: center; 
-  font-family: Courier;
+  /* font-family: Courier; */
+  color: blue;
   font-size: 10px;
+  font-style: blue;
+  font-family: verdana;
+  /* font-size: 300%; */
 }
 /* 
 .panel-primary{
