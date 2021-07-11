@@ -108,14 +108,17 @@ function metadata(yrid){
         var result = metadata;
         var display = d3.select("#sample-metadata");
         display.html("");
+       // display.html("<table>");
         for (i=0; i<result.length; i++){
+           // display.html('<tr>');
             Object.entries(result[i]).forEach(([key, value]) => {
-                display.append('div class=row');
-                display.append("h5").html(`<td><b>${key}</b>: ${value}</td>`);
-                
+                //display.append('div class=row');
+                display.append("h5").html(`<b>${key}</b>: ${value}`);
+             //   display.html('</tr>');    
             })//end forEach
             display.append('hr');
         }
+       // display.html("</table>");
     })//end d3
 }//end function
 
@@ -203,7 +206,7 @@ function lineGraph(yrid){
              return d.Year == yrid;
          }  
         var yrdetails = data.filter(filterDuiData) 
-        var yearTag = d3.select('#selDataset');
+       // var yearTag = d3.select('#selDataset');
 
         year_array = [];
         team_array = [];

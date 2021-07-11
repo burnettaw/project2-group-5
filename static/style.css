@@ -6,3 +6,20 @@
 .bubbles:hover {
   stroke: black;
 }
+
+.panel-body{
+  /* width:100%; */
+  height:300px;
+  overflow:scroll;
+}
+.panel-title{
+  text-align: center;
+  
+}
+
+/* 
+.panel-primary{
+  width:80%;
+  height:300px;
+  overflow:scroll;
+} */
