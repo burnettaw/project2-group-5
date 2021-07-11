@@ -54,6 +54,11 @@
 td, th {
   padding: 1px 4px;
 }
+.footer{
+  text-align: center; 
+  font-family: Courier;
+  font-size: 10px;
+}
 /* 
 .panel-primary{
   width:80%;
