@@ -106,15 +106,15 @@ function metadata(yrid){
         var display = d3.select("#sample-metadata");
         display.html("");
        // display.html("<table>");
-        for (i=0; i<result.length; i++){
-           // display.html('<tr>');
-            Object.entries(result[i]).forEach(([key, value]) => {
-                //display.append('div class=row');
-                display.append("h5").html(`<b>${key}</b>: ${value}`);
-             //   display.html('</tr>');    
-            })//end forEach
-            display.append('hr');
-        }
+        // for (i=0; i<result.length; i++){
+        //    // display.html('<tr>');
+        //     Object.entries(result[i]).forEach(([key, value]) => {
+        //         //display.append('div class=row');
+        //         display.append("h5").html(`<b>${key}</b>: ${value}`);
+        //      //   display.html('</tr>');    
+        //     })//end forEach
+        //     display.append('hr');
+        // }
        // display.html("</table>");
        createTable(result);
     })//end d3
@@ -126,7 +126,7 @@ function createTable(data){
         columns = data.keys;
         console.log(columns);
         function tabulate(data, columns) {
-              var table = d3.select('my_dataviz').append('table')
+              var table = d3.select('#sample-metadata').append('table')
               var thead = table.append('thead')
               var	tbody = table.append('tbody');
       
