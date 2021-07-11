@@ -11,7 +11,19 @@
   /* width:100%; */
   height:300px;
   overflow:scroll;
+  
 }
+
+#sample-metadata {
+  /* border-right: 2px solid red; */
+  width: 100%;
+}
+
+#sample-metadata table {
+  max-width: 400px;
+  width: 100% !important;
+}
+
 .panel-title{
   text-align: center;
   
