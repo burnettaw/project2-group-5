@@ -1,6 +1,3 @@
-
-
-
 function initdropdown(){
 
 
@@ -129,7 +126,7 @@ function createTable(data){
         columns = data.keys;
         console.log(columns);
         function tabulate(data, columns) {
-              var table = d3.select('sample-metadata').append('table')
+              var table = d3.select('my_dataviz').append('table')
               var thead = table.append('thead')
               var	tbody = table.append('tbody');
       
@@ -161,7 +158,7 @@ function createTable(data){
           }
       
           // render the table(s)
-          tabulate(data, ['Year','DATE','TEAM','NAME','POSITION','CASE','CATEGORY','Severity','DESCRIPTION','OUTCOME']); // 2 column table
+          tabulate(data, ['Year','DATE','TEAM','NAME','POSITION','CASE','CATEGORY','Severity','DESCRIPTION','OUTCOME']); // column in table
       
      // });
 }
@@ -257,8 +254,6 @@ function lineGraph(yrid){
         data.map((row_data) => {
             if (year_array.indexOf(row_data.Year) === -1) {
                 year_array.push(row_data.Year)
-                // console.log("row_data")
-                // console.log(row_data.Year)
             }
             if (team_array.indexOf(row_data.TEAM) === -1) {
             team_array.push(row_data.TEAM)
@@ -266,21 +261,11 @@ function lineGraph(yrid){
         });//end data.map
         
         console.log(year_array);
-        // yearTag.append("option")
-        //         .property("value", "")
-        //         .text("Select Year");
-        // year_array.map((year) => {
-        //     yearTag.append("option")
-        //             .property("value", year)
-        //             .text(year);
-        // });
-        // console.log("yearTag")
-        // console.log(yearTag)
+       
         team_array.map((element) => {
             team[element] = 0
-            // console.log(element, "= ", team[element])
         });
-        results = yrdetails; //data.filter(row => row.Year == selected_yr);
+        results = yrdetails; 
      
         for (var i = 0; i < results.length; i++) {
             teamName = results[i].TEAM

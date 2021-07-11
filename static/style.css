@@ -14,18 +14,30 @@
   
 }
 
-#sample-metadata {
+#my_dataviz {
   /* border-right: 2px solid red; */
   width: 100%;
 }
 
-#sample-metadata table {
+#my_dataviz table {
   max-width: 400px;
   width: 100% !important;
+  table-layout:fixed;
+  width:100%;
 }
 
 .panel-title{
   text-align: center;
+  
+}
+.bar{
+  background-color: blue;
+  height: 200px;
+  
+}
+.gauge{
+  background-color: blue;
+  height: 200px;
   
 }
 
