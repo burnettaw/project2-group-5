@@ -40,7 +40,20 @@
   height: 200px;
   
 }
+#page-heading{ 
+  /* background-image: url("../images/adrian-curiel-_GPDUfIlooM-unsplash.jpg"); */
+  background-color: white; 
+  background: rgba(252, 250, 249, 0.5);
+}
 
+.jumbotron{ 
+  background-image: url("../images/adrian-curiel-_GPDUfIlooM-unsplash.jpg");
+  width: 100%;
+}
+
+td, th {
+  padding: 1px 4px;
+}
 /* 
 .panel-primary{
   width:80%;

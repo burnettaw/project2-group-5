@@ -103,19 +103,19 @@ function metadata(yrid){
        // console.log(metadata)
                 
         var result = metadata;
-        var display = d3.select("#sample-metadata");
-        display.html("");
-       // display.html("<table>");
-        // for (i=0; i<result.length; i++){
-        //    // display.html('<tr>');
-        //     Object.entries(result[i]).forEach(([key, value]) => {
-        //         //display.append('div class=row');
-        //         display.append("h5").html(`<b>${key}</b>: ${value}`);
-        //      //   display.html('</tr>');    
-        //     })//end forEach
-        //     display.append('hr');
-        // }
-       // display.html("</table>");
+        //var display = d3.select("#sample-metadata");
+    //     display.html("");
+    //    // display.html("<table>");
+    //     // for (i=0; i<result.length; i++){
+    //     //    // display.html('<tr>');
+    //     //     Object.entries(result[i]).forEach(([key, value]) => {
+    //     //         //display.append('div class=row');
+    //     //         display.append("h5").html(`<b>${key}</b>: ${value}`);
+    //     //      //   display.html('</tr>');    
+    //     //     })//end forEach
+    //     //     display.append('hr');
+    //     // }
+    //    // display.html("</table>");
        createTable(result);
     })//end d3
 }//end function
@@ -126,10 +126,19 @@ function createTable(data){
         columns = data.keys;
         console.log(columns);
         function tabulate(data, columns) {
-              var table = d3.select('#sample-metadata').append('table')
+              var table = d3.select('#sample-metadata')
+              table.html("")
+              table.append('table')
+              
               var thead = table.append('thead')
               var	tbody = table.append('tbody');
-      
+            //   th,
+            //   td {
+            //     width: 150px;
+            //     text-align: center;
+            //     border: 1px solid black;
+            //     padding: 5px;
+            //   }
               // append the header row
               thead.append('tr')
                 .selectAll('th')
@@ -138,14 +147,14 @@ function createTable(data){
                   .text(function (column) { return column; });
       
               // create a row for each object in the data
-              var rows = tbody.selectAll('tr')
+              var rows = tbody.selectAll('tr').html("")
                 .data(data)
                 .enter()
                 .append('tr');
       
               // create a cell in each row for each column
               var cells = rows.selectAll('td')
-                .data(function (row) {
+                  .data(function (row) {
                   return columns.map(function (column) {
                     return {column: column, value: row[column]};
                   });
