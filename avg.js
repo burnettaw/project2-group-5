@@ -24,7 +24,7 @@ var data = [
       mode: "gauge+number"
     }
   ];
-11:36
+
 var yearTag = d3.select('#selYear');
 year_array = [];
 team_array = [];

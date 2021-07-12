@@ -50,9 +50,13 @@
   background-image: url("../images/adrian-curiel-_GPDUfIlooM-unsplash.jpg");
   width: 100%;
 }
-
 td, th {
   padding: 1px 4px;
+  background-color: #f0f0f0;
+}
+table{
+  border-bottom: blueviolet;
+  font-size: 8px;
 }
 .footer{
   text-align: center; 

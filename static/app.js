@@ -38,22 +38,37 @@ function createBarChart(yrid){
     
         // Use filter() to pass the function as its argument
         var filteredDui = duiData.filter(filterDuiData);
-    
+                
         // Filtering Dui.
         console.log(filteredDui);
     
         var teams = filteredDui.map(category =>  category.TEAM);
-    
+        
         var category = filteredDui.map(category => category.Severity);
-    
+       // var catsorted = filteredDui.map(category => category.Severity).sort((a, b) => a - b);
+        //Sorting from highest to lowest
+        // teamsortedbycat=[];
+        // for(i=0;i<category.length;i++)
+        //     for(j=0;j<catsorted.length;j++)
+        //         if(category[i] == catsorted[j])
+        //             teamsortedbycat[j] = teams[i]
+        // console.log("teams")
+        // console.log(teams)
+        // console.log("cat")
+        // console.log(category)
+        // console.log("catsorted")
+        // console.log(catsorted)
+        // console.log("teamsortedbycat")
+        // console.log(teamsortedbycat)
+
         // Filtered metascores.
-        console.log(category);
-    
+       // console.log(category);
+       // x.domain(data.sort(order).map(d => d.Severity));
         // Create your trace.
         var trace = {
-        x: teams,
-        y: category,
-        type: "bar"
+            x: teams,
+            y: category,
+            type: "bar"
         };
     
         // Create the data array for our plot
@@ -61,9 +76,12 @@ function createBarChart(yrid){
     
         // Define the plot layout
         var layout = {
-        title: "Teams with highest DUI Arrested.",
-        xaxis: { teams: "Team" },
-        yaxis: { category: "NFL Team (Dui) Arrests"}
+            title: `NFL Teams DUI in ${yrid}`,
+           //title: 'Teams DUI Arrests ${yrid}',
+            xaxis: { teams: "Team" },
+            yaxis: { category: "NFL Team (Dui) Arrests"},
+            font: { color: "darkblue", family: "Arial" }
+          //  title: { text: 'Teams DUI Arrests ${yrid}', font: { size: 24 }}
         };
     
         // Plot the chart to a div tag with id "bar-plot"
@@ -75,16 +93,16 @@ function optionChanged(id){
     metadata(id);
     createBarChart(id);
     lineGraph(id);
-   gauge(id);
+    gauge(id);
 }
    
 var svgWidth = 500;
 var svgHeight = 1500;
 var margin = {
-    top: 20,
-    right: 40,
-    bottom: 60,
-    left: 100
+        top: 20,
+        right: 40,
+        bottom: 60,
+        left: 100
     };//end margin
 
 //Loads the detail data into sample metadata area
@@ -103,22 +121,22 @@ function metadata(yrid){
        // console.log(metadata)
                 
         var result = metadata;
-        //var display = d3.select("#sample-metadata");
-    //     display.html("");
-    //    // display.html("<table>");
-    //     // for (i=0; i<result.length; i++){
-    //     //    // display.html('<tr>');
-    //     //     Object.entries(result[i]).forEach(([key, value]) => {
-    //     //         //display.append('div class=row');
-    //     //         display.append("h5").html(`<b>${key}</b>: ${value}`);
-    //     //      //   display.html('</tr>');    
-    //     //     })//end forEach
-    //     //     display.append('hr');
-    //     // }
-    //    // display.html("</table>");
+    
        createTable(result);
     })//end d3
-}//end function
+}//end metada function
+
+function setTrBackground(){
+    var rows = d3.selectAll('tr')
+    console.log("rows")
+    console.log(rows)
+    for(i=0; i<rows.length; i++)
+        if (i % 2 == 0) 
+            rows[i].append('tr').style('background-color', 'lightblue');
+        else
+            rows[i].append('tr').style('background-color', 'none')
+        
+}//end setbackground
 
 function createTable(data){
 
@@ -132,13 +150,7 @@ function createTable(data){
               
               var thead = table.append('thead')
               var	tbody = table.append('tbody');
-            //   th,
-            //   td {
-            //     width: 150px;
-            //     text-align: center;
-            //     border: 1px solid black;
-            //     padding: 5px;
-            //   }
+            
               // append the header row
               thead.append('tr')
                 .selectAll('th')
@@ -150,8 +162,8 @@ function createTable(data){
               var rows = tbody.selectAll('tr').html("")
                 .data(data)
                 .enter()
-                .append('tr');
-      
+                .append('tr')
+           
               // create a cell in each row for each column
               var cells = rows.selectAll('td')
                   .data(function (row) {
@@ -162,19 +174,19 @@ function createTable(data){
                 .enter()
                 .append('td')
                   .text(function (d) { return d.value; });
-      
-            return table;
+
+                return table;
           }
-      
+          
           // render the table(s)
           tabulate(data, ['Year','DATE','TEAM','NAME','POSITION','CASE','CATEGORY','Severity','DESCRIPTION','OUTCOME']); // column in table
-      
+           // background of row function
+           setTrBackground();
      // });
 }
 function gauge(yrid){
     d3.json("../static/data/nfl-dui2.json").then(function(data){
-       // console.log("in metadata")
-       // console.log(data)
+       
         function filterDuiData(d) {
             return d.Year == yrid;
         }  
@@ -194,12 +206,12 @@ function gauge(yrid){
         console.log(sum)
         console.log('average')
         console.log(average)
-       //if severity category is 0 add 1
+      
         var duicat = average;
         console.log('average')
         console.log(average)
        
-        var title = "Teams Average Severity"
+        //var title = "Teams Average Severity"
         console.log('duicat')
         console.log(duicat)
         var data = [{
@@ -236,7 +248,8 @@ function gauge(yrid){
         height: 400,
        // margin: { t: 0, r: 0, l: 0, b: 0 },
         font: { color: "darkblue", family: "Arial" },
-        title: { text: title, font: { size: 24 }}
+        title: `NFL Overall DUI Average Severity in ${yrid}`
+        //title: { text: title, font: { size: 24 }}
        
       };//end layout
       
@@ -249,14 +262,12 @@ function gauge(yrid){
 function lineGraph(yrid){
     console.log("in line gragh function")
     d3.json("../static/data/nfl-dui2.json").then(function(data){
-        // console.log("in metadata")
-        // console.log(data)
+       
          function filterDuiData(d) {
              return d.Year == yrid;
          }  
         var yrdetails = data.filter(filterDuiData) 
-       // var yearTag = d3.select('#selDataset');
-
+      
         year_array = [];
         team_array = [];
         team = {};
@@ -265,7 +276,7 @@ function lineGraph(yrid){
                 year_array.push(row_data.Year)
             }
             if (team_array.indexOf(row_data.TEAM) === -1) {
-            team_array.push(row_data.TEAM)
+                team_array.push(row_data.TEAM)
             }//end if
         });//end data.map
         
@@ -294,28 +305,29 @@ function lineGraph(yrid){
         var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         var dui = [];
         for (var i = 0; i <= 12; i++) {
-        dui[i.toString()] = 0
+            dui[i.toString()] = 0
         }
         console.log("results.length")
         console.log(results)
         for (var i = 0; i < results.length; i++) {
-        m = results[i].DATE[0]
-        dui[m] += 1
+            m = results[i].DATE[0]
+            dui[m] += 1
         }
         console.log(month, "= ", dui)
         var line_trace = {
-        x: month,
-        y: dui,
-        type: 'scatter'
+            x: month,
+            y: dui,
+            type: 'scatter'
         };
 
         selected_yr = yrid
         var line_layout = {
-        title: `NFL Teams Monthly DUI in ${selected_yr}`
+            font: { color: "darkblue", family: "Arial" },
+            title: `NFL Teams Monthly DUI in ${selected_yr}`
         };
         var data = [line_trace];
         Plotly.newPlot('line', data, line_layout);
   
   });
-}// line chart
+}// end line chart
 initdropdown(); //calls function to fill dropdown object
