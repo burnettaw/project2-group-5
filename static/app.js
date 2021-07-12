@@ -52,17 +52,7 @@ function createBarChart(yrid){
         //     for(j=0;j<catsorted.length;j++)
         //         if(category[i] == catsorted[j])
         //             teamsortedbycat[j] = teams[i]
-        // console.log("teams")
-        // console.log(teams)
-        // console.log("cat")
-        // console.log(category)
-        // console.log("catsorted")
-        // console.log(catsorted)
-        // console.log("teamsortedbycat")
-        // console.log(teamsortedbycat)
-
-        // Filtered metascores.
-       // console.log(category);
+      
        // x.domain(data.sort(order).map(d => d.Severity));
         // Create your trace.
         var trace = {
@@ -77,11 +67,10 @@ function createBarChart(yrid){
         // Define the plot layout
         var layout = {
             title: `NFL Teams DUI in ${yrid}`,
-           //title: 'Teams DUI Arrests ${yrid}',
             xaxis: { teams: "Team" },
             yaxis: { category: "NFL Team (Dui) Arrests"},
             font: { color: "darkblue", family: "Arial" }
-          //  title: { text: 'Teams DUI Arrests ${yrid}', font: { size: 24 }}
+         
         };
     
         // Plot the chart to a div tag with id "bar-plot"
@@ -156,7 +145,7 @@ function createTable(data){
                 .selectAll('th')
                 .data(columns).enter()
                 .append('th')
-                  .text(function (column) { return column; });
+                .text(function (column) { return column; });
       
               // create a row for each object in the data
               var rows = tbody.selectAll('tr').html("")
@@ -330,4 +319,20 @@ function lineGraph(yrid){
   
   });
 }// end line chart
+
+
+//add sources info
+function addSources(){
+    var displaySources = " <ul><li>www.ridesharecentral.com</li><li> www.kaggle.com </li>"+
+                        "<li>www.wired.com</li><li>www.CNET.com</li></ul>";
+    var sources = d3.select('#sources')
+        sources.html("")
+        sources.append('div')
+               // .append('hr')
+                .html(displaySources)
+                
+               // .append('hr');
+}//function addSources
+
 initdropdown(); //calls function to fill dropdown object
+addSources();
